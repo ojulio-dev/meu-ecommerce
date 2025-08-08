@@ -37,7 +37,8 @@ if (isset($_SESSION['customer'])) {
             <span class="ms ok"><?= $_SESSION['msg'] ?></span>
         </div>
 
-    <?php unset($_SESSION['msg']); endif;
+<?php unset($_SESSION['msg']);
+    endif;
 }
 
 ?>
@@ -52,32 +53,34 @@ if (isset($_SESSION['customer'])) {
                 <th class="table-title table-four">Sair</th>
             </tr>
         </thead>
-        
+
         <tbody>
-            <?php $image = file_exists(DIR_DOCUMENT . '/ecommerce/assets/images/' . $user['image']) 
-                ? DIR_IMG . '/' . $user['image'] 
-                : DIR_IMG . '/products/placeholder.png';?>
+            <?php $image = file_exists(BASE_PATH . '/assets/images/' . $user['image'])
+                ? DIR_IMG . '/' . $user['image']
+                : DIR_IMG . '/products/placeholder.png'; ?>
             <tr>
                 <td class="table-column">
                     <div class="column-name-wrapper">
                         <img class="table-photo" src="<?= $image ?>" alt="">
                         <p class="column-name">
                             <?php
-                                echo strlen($user['name']) > 20 
-                                    ? substr($user['name'], 0, 20) . '...' 
-                                    : $user['name']?>
+                            echo strlen($user['name']) > 20
+                                ? substr($user['name'], 0, 20) . '...'
+                                : $user['name'] ?>
                         </p>
                     </div>
                 </td>
                 <td class="table-column column-second">
                     <p class="column-email">
                         <?php
-                            echo strlen($user['email']) > 25 
-                                ? substr($user['email'], 0, 25) . '...' 
-                                : $user['email']?>
+                        echo strlen($user['email']) > 25
+                            ? substr($user['email'], 0, 25) . '...'
+                            : $user['email'] ?>
                     </p>
                 </td>
-                <td class="table-column column-third"><p><?= $user['age'] ?></p></td>
+                <td class="table-column column-third">
+                    <p><?= $user['age'] ?></p>
+                </td>
                 <td class="table-column column-button">
                     <a href="?page=customer&action=logout"><i class="fa-solid fa-arrow-right-from-bracket"></i></a>
                 </td>
@@ -88,13 +91,14 @@ if (isset($_SESSION['customer'])) {
     <?php if (isset($orders)): ?>
         <h2 class="customer-order-title">Todos os Pedidos</h2>
         <ul class="customer-list-products">
-            <?php $index = 1; foreach($orders as $order => $products):?>
+            <?php $index = 1;
+            foreach ($orders as $order => $products): ?>
                 <li class="customer-orders">
                     <p><?= "Pedido $index" ?></p>
-                    <?php foreach($products as $product): ?>
-                        <?php $image = file_exists(DIR_DOCUMENT . '/ecommerce/assets/images/' . $user['image']) 
-                            ? DIR_IMG . '/' . $product['banner'] 
-                            : DIR_IMG . '/products/placeholder.png';?>
+                    <?php foreach ($products as $product): ?>
+                        <?php $image = file_exists(BASE_PATH . '/assets/images/' . $product['banner'])
+                            ? DIR_IMG . '/' . $product['banner']
+                            : DIR_IMG . '/products/placeholder.png'; ?>
 
                         <div class="customer-order">
                             <div class="customer-list-name">
@@ -107,7 +111,8 @@ if (isset($_SESSION['customer'])) {
 
                     <?php endforeach ?>
                 </li>
-            <?php $index++; endforeach ?>
+            <?php $index++;
+            endforeach ?>
         </ul>
     <?php endif ?>
 </main>

@@ -3,12 +3,14 @@
 define('ENVIRONMENT', 'development');
 
 // Caso o projeto esteja dentro de uma pasta e não na raiz do www|htdocs
-define('DIR_ROOT', '/ecommerce');
+define('DIR_ROOT', '/meu-ecommerce');
 
 // Define o nome do servidor
 define('DIR_SERVER', $_SERVER['SERVER_NAME']);
 
 define('DIR_DOCUMENT', $_SERVER['DOCUMENT_ROOT']);
+
+define('BASE_PATH', DIR_DOCUMENT . DIR_ROOT);
 
 // Define se a porta é https ou http
 define('DIR_PROTOCOL', ($_SERVER['SERVER_PORT'] != '80') ? 'https' : 'http');

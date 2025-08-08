@@ -6,14 +6,15 @@ class Product extends Database
 {
     private $stmt, $sql, $conn, $table;
 
-    public function __construct() 
+    public function __construct()
     {
         $this->conn = parent::conn();
         $this->table = "product";
     }
 
-    private function createFile($file, $id) {
-        $extension = strtolower( substr($file['name'], -4) );
+    private function createFile($file, $id)
+    {
+        $extension = strtolower(substr($file['name'], -4));
 
         $newName = $id . $extension;
 
@@ -29,7 +30,7 @@ class Product extends Database
     public function create($data)
     {
         try {
-            $this->setSql("INSERT INTO " .$this->table. " (category_id, name,amount ,description, special_price, price, slug) VALUES ('" . $data['category_id'] . "', '" . $data['name'] . "'," . $data['amount'] . " ,'" . $data['description'] . "', '" . $data['special_price'] . "', '" . $data['price'] . "', '" . $data['slug'] . "')");
+            $this->setSql("INSERT INTO " . $this->table . " (category_id, name,amount ,description, special_price, price, slug) VALUES ('" . $data['category_id'] . "', '" . $data['name'] . "'," . $data['amount'] . " ,'" . $data['description'] . "', '" . $data['special_price'] . "', '" . $data['price'] . "', '" . $data['slug'] . "')");
 
             $this->stmt = $this->conn->prepare($this->getSql());
 
@@ -46,12 +47,12 @@ class Product extends Database
             } else {
                 return false;
             }
-        } catch(PDOException $e) {
+        } catch (PDOException $e) {
             return $e->getMessage();
         }
     }
 
-    public function read(): array
+    public function read()
     {
         try {
             $this->setSql("SELECT * from {$this->table}");
@@ -62,27 +63,26 @@ class Product extends Database
 
             return $this->stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
-            return $e->getMessage();
+            return array($e->getMessage());
         }
     }
 
-    public function readById(int $id): array
+    public function readById(int $id)
     {
         try {
-            $this->setSql("SELECT * FROM " .$this->table. " WHERE product_id = {$id}");
+            $this->setSql("SELECT * FROM " . $this->table . " WHERE product_id = {$id}");
 
             $this->stmt = $this->conn->prepare($this->getSql());
 
             $this->stmt->execute();
 
             return $this->stmt->fetch();
-
         } catch (PDOException $e) {
             return $e->getMessage();
         }
     }
 
-    public function readBySlug(string $slug): array 
+    public function readBySlug(string $slug)
     {
         try {
             $this->setSql("SELECT * FROM " . $this->table . " WHERE slug = '$slug'");
@@ -92,7 +92,6 @@ class Product extends Database
             $this->stmt->execute();
 
             return $this->stmt->fetch(PDO::FETCH_ASSOC);
-
         } catch (PDOException $e) {
             return $e->getMessage();
         }
@@ -137,11 +136,12 @@ class Product extends Database
     {
         try {
             $this->setSql(
-            "UPDATE " . $this->table . "
+                "UPDATE " . $this->table . "
                 SET amount = $data
             WHERE
                 product_id = $id
-            ");
+            "
+            );
 
             $this->stmt = $this->conn->prepare($this->getSql());
 
@@ -156,27 +156,28 @@ class Product extends Database
             return $e->getMessage();
         }
     }
-    
+
     public function update(array $data): bool
     {
         try {
             $this->setSql(
-            "UPDATE " . $this->table . "
+                "UPDATE " . $this->table . "
                 SET name = '{$data['name']}', category_id = {$data['category_id']}, amount = {$data['amount']}, description = '{$data['description']}', price = {$data['price']}, special_price = {$data['special_price']}, slug = '{$data['slug']}', status = {$data['status']}
             WHERE
                 product_id = {$data['product_id']}
-            ");
+            "
+            );
 
             $this->stmt = $this->conn->prepare($this->getSql());
 
             if ($this->stmt->execute()) {
                 if (isset($_FILES['image']) && !empty($_FILES['image']['tmp_name'])) {
                     $this->deleteFile($data['product_id']);
-                    
+
                     $id = $data['product_id'];
-    
+
                     $destiny = $this->createFile($_FILES['image'], $id);
-    
+
                     $this->updateByField($destiny, 'banner', $id);
                 }
 
@@ -193,11 +194,12 @@ class Product extends Database
     {
         try {
             $this->setSql(
-            "UPDATE " . $this->table . "
+                "UPDATE " . $this->table . "
                 SET $field = '$data'
             WHERE
                 product_id = $productId
-            ");
+            "
+            );
 
             $this->stmt = $this->conn->prepare($this->getSql());
 
@@ -213,7 +215,8 @@ class Product extends Database
         }
     }
 
-    private function deleteFile($id) {
+    private function deleteFile($id)
+    {
         $data = $this->readById($id);
         $destiny = __DIR__ . '/../assets/images/' . $data['banner'] . '';
 

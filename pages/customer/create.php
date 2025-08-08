@@ -10,33 +10,33 @@ if (isset($_POST['submit'])) {
     if ($_POST['password'] == $_POST['confirm-password'] && !$email) {
         $create = $customer->create($_POST);
 
-        if($create) {
+        if ($create) {
             $_SESSION['msg'] = "Cadastrado com sucesso!";
             header("Location: index.php?page=customer");
         } else {
             echo "Erro ao criar a conta";
         }
     } elseif ($_POST['password'] !== $_POST['confirm-password']) {
-        $_SESSION['msg'] = "Digite a senha corretamente!";?>
-
-            <div class="flash-message">
-                <span class="ms erro"><?= $_SESSION['msg'] ?></span>
-            </div>
-        <?php  unset($_SESSION['msg']); 
-    } elseif($email) {
-        $_SESSION['msg'] = "Email já cadastrado!";?>
-
-            <div class="flash-message">
-                <span class="ms erro"><?= $_SESSION['msg'] ?></span>
-            </div>
-        <?php  unset($_SESSION['msg']); 
-    } else {
-        $_SESSION['msg'] = "Algo deu errado :/";?>
+        $_SESSION['msg'] = "Digite a senha corretamente!"; ?>
 
         <div class="flash-message">
             <span class="ms erro"><?= $_SESSION['msg'] ?></span>
         </div>
-        <?php  unset($_SESSION['msg']); 
+    <?php unset($_SESSION['msg']);
+    } elseif ($email) {
+        $_SESSION['msg'] = "Email já cadastrado!"; ?>
+
+        <div class="flash-message">
+            <span class="ms erro"><?= $_SESSION['msg'] ?></span>
+        </div>
+    <?php unset($_SESSION['msg']);
+    } else {
+        $_SESSION['msg'] = "Algo deu errado :/"; ?>
+
+        <div class="flash-message">
+            <span class="ms erro"><?= $_SESSION['msg'] ?></span>
+        </div>
+<?php unset($_SESSION['msg']);
     }
 }
 
@@ -56,7 +56,9 @@ if (isset($_POST['submit'])) {
                 <input type="email" name="email" placeholder="E-mail" required>
 
                 <div class="mb-3 customer-image" style="margin: 0 !important;">
-                    <label for="formFile"><p>Foto de Perfil</p></label>
+                    <label for="formFile">
+                        <p>Foto de Perfil</p>
+                    </label>
                     <input class="form-control" type="file" accept="image/png, image/gif, image/jpeg, image/jpg, image/webp" id="formFile" name="image" required>
                 </div>
 
@@ -70,4 +72,4 @@ if (isset($_POST['submit'])) {
             </div>
         </form>
     </div>
-</main> 
+</main>

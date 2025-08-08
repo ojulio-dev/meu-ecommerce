@@ -1,5 +1,5 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'] . '/ecommerce/config/environment.php');
+require_once(BASE_PATH . '/config/environment.php');
 
 if (ENVIRONMENT === 'development') {
   define('DB_HOST', 'localhost');
@@ -10,7 +10,7 @@ if (ENVIRONMENT === 'development') {
 } else {
   define('DB_HOST', 'localhost');
   define('DB_PORT', '3306');
-  define('DB_NAME', 'u668278917_db_ecommerce');
-  define('DB_USER', 'u668278917_ecommerce');
-  define('DB_PASS', '>BB[eITiz5N');
+  define('DB_NAME', '');
+  define('DB_USER', '');
+  define('DB_PASS', '>BB[');
 }

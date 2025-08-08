@@ -17,9 +17,9 @@ $products = new Product;
         <h2 class="main-subtitle">Novidades</h2>
         <article class="products">
             <?php foreach ($products->readByNews() as $product) { ?>
-                <?php $image = file_exists(DIR_DOCUMENT . '/ecommerce/assets/images/' . $product['banner']) 
-                    ? DIR_IMG . '/' . $product['banner'] 
-                    : DIR_IMG . '/products/placeholder.png';?>
+                <?php $image = file_exists(BASE_PATH . '/assets/images/' . $product['banner'])
+                    ? DIR_IMG . '/' . $product['banner']
+                    : DIR_IMG . '/products/placeholder.png'; ?>
 
                 <figure class="product-items">
                     <a href="?page=product&slug=<?= $product['slug'] ?>">
@@ -32,7 +32,7 @@ $products = new Product;
                         <a href="?page=product&slug=<?= $product['slug'] ?>" class="product-slug">
                             <figcaption class="about"><?= $product['name'] ?></figcaption>
                         </a>
-                        
+
                         <figcaption class="value">R$ <?= number_format($product['special_price'], 2, ',', '.') ?></figcaption>
                     </div>
                 </figure>
@@ -42,7 +42,7 @@ $products = new Product;
 
     <section class="main-products">
         <?php foreach ($productCategory->read() as $category) { ?>
-            <?php $products = $productCategory->readByCategory($category['category_id'])?>
+            <?php $products = $productCategory->readByCategory($category['category_id']) ?>
 
             <?php if (count($products)): ?>
                 <div class="products-title-wrapper">
@@ -52,9 +52,9 @@ $products = new Product;
 
                 <article class="products">
                     <?php foreach ($products as $product) { ?>
-                        <?php $image = file_exists(DIR_DOCUMENT . '/ecommerce/assets/images/' . $product['banner']) 
-                            ? DIR_IMG . '/' . $product['banner'] 
-                            : DIR_IMG . '/products/placeholder.png';?>
+                        <?php $image = file_exists(BASE_PATH . '/assets/images/' . $product['banner'])
+                            ? DIR_IMG . '/' . $product['banner']
+                            : DIR_IMG . '/products/placeholder.png'; ?>
 
                         <figure class="product-items">
                             <a href="?page=product&slug=<?= $product['slug'] ?>">
@@ -67,7 +67,7 @@ $products = new Product;
                                 <a href="?page=product&slug=<?= $product['slug'] ?>" class="product-slug">
                                     <figcaption class="about"><?= $product['name'] ?></figcaption>
                                 </a>
-                                
+
                                 <figcaption class="value">R$ <?= number_format($product['special_price'], 2, ',', '.') ?></figcaption>
                             </div>
                         </figure>

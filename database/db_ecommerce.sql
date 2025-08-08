@@ -13,7 +13,7 @@ USE `db_ecommerce`;
 CREATE TABLE IF NOT EXISTS `customer` (
   `customer_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
-  `image` varchar(255) NOT NULL,
+  `image` varchar(255) default NULL,
   `age` int(11) NOT NULL,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `product` (
   `product_id` int(11) NOT NULL AUTO_INCREMENT,
   `category_id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `banner` varchar(255) NOT NULL,
+  `banner` varchar(255),
   `amount` int(11) NOT NULL,
   `description` text NOT NULL,
   `special_price` double NOT NULL,

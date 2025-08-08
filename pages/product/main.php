@@ -28,23 +28,23 @@ if (isset($_GET['insert']) && isset($_SESSION['customer']) && $product['amount']
 
         header("Location: index.php?page=cart");
     }
-} elseif (isset($_GET['insert']) && ( $product['amount'] <= 0 || $product['status'] == 0 )) {
+} elseif (isset($_GET['insert']) && ($product['amount'] <= 0 || $product['status'] == 0)) {
     $_SESSION['msg'] = "Produto indisponível"; ?>
 
     <div class="flash-message">
         <span class="ms erro"><?= $_SESSION['msg'] ?></span>
     </div>
-    <?php  unset($_SESSION['msg']);
+<?php unset($_SESSION['msg']);
 }
 
 ?>
 
 <main class="container-detail">
 
-    <?php $image = file_exists(DIR_DOCUMENT . '/ecommerce/assets/images/' . $product['banner']) 
-        ? DIR_IMG . '/' . $product['banner'] 
-        : DIR_IMG . '/products/placeholder.png';?>
-        
+    <?php $image = file_exists(BASE_PATH . '/assets/images/' . $product['banner'])
+        ? DIR_IMG . '/' . $product['banner']
+        : DIR_IMG . '/products/placeholder.png'; ?>
+
     <div class="main-image">
         <img class="image-item" src="<?= $image ?>" alt="">
     </div>
@@ -54,8 +54,8 @@ if (isset($_GET['insert']) && isset($_SESSION['customer']) && $product['amount']
                 <h1 class="title-product"><?= $product['name'] ?></h1>
 
                 <?php $product['status'] == 1 && $product['amount'] > 0 ? $statusColor = 'status-sucess' : $statusColor = 'status-danger' ?>
-                
-                <p class="product-status <?= $statusColor ?>"><?php echo $product['status'] == 1 && $product['amount'] > 0 ?'Produto Disponível' : 'Produto indisponível' ?> </p>
+
+                <p class="product-status <?= $statusColor ?>"><?php echo $product['status'] == 1 && $product['amount'] > 0 ? 'Produto Disponível' : 'Produto indisponível' ?> </p>
 
                 <p class="description-price">à vista</p>
 
@@ -65,7 +65,7 @@ if (isset($_GET['insert']) && isset($_SESSION['customer']) && $product['amount']
                     <h4 class="price">R$ <?= number_format($product['price'], 2, ',', '.') ?></h4>
                 </div>
 
-                <a class="button-cart" href="<?= isset($_SESSION['customer']) ? '?page=product&slug=' . $product['slug']. '&insert=cart' : '?page=customer' ?>"> ADICIONAR AO CARRINHO</a>
+                <a class="button-cart" href="<?= isset($_SESSION['customer']) ? '?page=product&slug=' . $product['slug'] . '&insert=cart' : '?page=customer' ?>"> ADICIONAR AO CARRINHO</a>
 
                 <p class="status-description">Quantidade: <?= $product['amount'] ?></p>
 

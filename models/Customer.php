@@ -2,7 +2,8 @@
 
 require_once(__DIR__ . '/../classes/Database.php');
 
-class Customer extends Database{
+class Customer extends Database
+{
     private $stmt, $sql, $conn, $table;
 
     public function __construct()
@@ -12,8 +13,10 @@ class Customer extends Database{
         $this->table = 'customer';
     }
 
-    public function createFile($file, $id) {
-        $extension = strtolower( substr($file['name'], -4) );
+    public function createFile($file, $id)
+    {
+
+        $extension = strtolower(substr($file['name'], -4));
 
         $newName = $id . $extension;
 
@@ -27,15 +30,17 @@ class Customer extends Database{
     }
 
     public function create($data)
-    {   
+    {
         try {
-            $this->setSql("INSERT INTO {$this->table} (name, email, age, password) VALUES ('". $data['name'] . "', '". $data['email'] . "'," . $data['age'] . ",'". md5($data['password']) . "')");
+
+            $this->setSql("INSERT INTO {$this->table} (name, email, age, password) VALUES ('" . $data['name'] . "', '" . $data['email'] . "'," . $data['age'] . ",'" . md5($data['password']) . "')");
 
             $this->stmt = $this->conn->prepare($this->getSql());
 
             $this->stmt->execute();
 
             if ($this->stmt->rowCount()) {
+
                 $id = $this->conn->lastInsertId();
 
                 $destiny = $this->createFile($_FILES['image'], $id);
@@ -54,10 +59,10 @@ class Customer extends Database{
     public function login($data)
     {
         try {
-            $this->setSql("SELECT * from " . $this->table . " WHERE email = '{$data['email']}' and password = '". md5($data['password']) . "' ");
+            $this->setSql("SELECT * from " . $this->table . " WHERE email = '{$data['email']}' and password = '" . md5($data['password']) . "' ");
 
             $this->stmt = $this->conn->prepare($this->getSql());
-    
+
             $this->stmt->execute();
 
             if ($this->stmt->columnCount()) {
@@ -76,7 +81,7 @@ class Customer extends Database{
             $this->setSql("SELECT * from " . $this->table . " WHERE customer_id = $id ");
 
             $this->stmt = $this->conn->prepare($this->getSql());
-    
+
             $this->stmt->execute();
 
             return $this->stmt->fetch();
@@ -91,7 +96,7 @@ class Customer extends Database{
             $this->setSql("SELECT * from " . $this->table . " WHERE email = '$email' ");
 
             $this->stmt = $this->conn->prepare($this->getSql());
-    
+
             $this->stmt->execute();
 
             if ($this->stmt->rowCount()) {
@@ -108,11 +113,12 @@ class Customer extends Database{
     {
         try {
             $this->setSql(
-            "UPDATE " . $this->table . "
+                "UPDATE " . $this->table . "
                 SET $field = '$data'
             WHERE
                 customer_id = $productId
-            ");
+            "
+            );
 
             $this->stmt = $this->conn->prepare($this->getSql());
 
@@ -138,11 +144,12 @@ class Customer extends Database{
     {
         try {
             $this->setSql(
-            "UPDATE " . $this->table . "
+                "UPDATE " . $this->table . "
                 SET name = '{$data['name']}', age = {$data['age']}, email = '{$data['email']}'
             WHERE
                 customer_id = {$data['customer_id']}
-            ");
+            "
+            );
 
             $this->stmt = $this->conn->prepare($this->getSql());
 
@@ -158,16 +165,15 @@ class Customer extends Database{
         }
     }
 
-    public function delete()
+    public function delete() {}
+
+    public function setSql($sql)
     {
-
-    }
-
-    public function setSql($sql) {
         $this->sql = $sql;
     }
 
-    public function getSql() {
+    public function getSql()
+    {
         return $this->sql;
     }
 }
